@@ -1,0 +1,18 @@
+[Unit]
+Description=Vault-Airlock: Secure credential relay for isolated agents
+Documentation=https://github.com/nirvam/vault-airlock
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/vault-airlock serve \
+    --kdbx %h/.local/share/vault-airlock/vault.kdbx \
+    --socket %t/vault-airlock.sock
+Restart=on-failure
+
+ProtectSystem=full
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

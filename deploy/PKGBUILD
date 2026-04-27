@@ -1,0 +1,27 @@
+# Maintainer: Your Name <you@example.com>
+pkgname=vault-airlock
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Vault-Airlock: Secure credential relay for isolated agents"
+arch=('x86_64')
+url="https://github.com/nirvam/vault-airlock"
+license=('MIT')
+depends=('gcc-libs')
+makedepends=('rust' 'cargo')
+source=("$pkgname-$pkgver.tar.gz" "vault-airlock.service")
+sha256sums=('SKIP' 'dfd4f6494c8fe5739b99739bbea94ceba3c2de7b1a787a0ab5fe11fac9c68e27')
+
+build() {
+  cd "$pkgname-$pkgver"
+  cargo build --release --locked
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  
+  # 安装二进制
+  install -Dm755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
+  
+  # 安装 systemd user unit
+  install -Dm644 "vault-airlock.service" "$pkgdir/usr/lib/systemd/user/vault-airlock.service"
+}

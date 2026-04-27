@@ -1,0 +1,17 @@
+/target
+Cargo.lock
+**/*.rs.bk
+
+# Sensitive data
+password.txt
+*.kdbx
+
+# Documentation and specs
+/docs
+
+# System/Tooling
+.DS_Store
+.idea/
+.vscode/
+.gemini/
+.geminiignore
